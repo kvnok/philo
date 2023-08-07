@@ -1,17 +1,14 @@
 NAME = philo
 CC = cc
 HEADER = ./src/philo.h
-# CFLAGS = -Wall -Wextra -Werror
-# CFLAGS = -fsanitize=address
-# CFLAGS = -Wall
-CFLAGS ?=
+CFLAGS = -Wall -Wextra -Werror
 SRCS := $(shell find ./src -iname "*.c")
 OBJS := $(addprefix obj/,$(notdir $(SRCS:.c=.o)))
 
 all: $(NAME)
-#-lpthread
+
 $(NAME): $(OBJS)
-	@$(CC) -o $@ $^
+	@$(CC) $(CFLAGS) -o $@ $^
 
 obj/%.o: src/%.c $(HEADER)
 	@mkdir -p $(dir $@)

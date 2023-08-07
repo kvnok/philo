@@ -6,7 +6,7 @@
 /*   By: kkroon <kkroon@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/10/06 11:26:48 by kkroon        #+#    #+#                 */
-/*   Updated: 2023/07/10 16:49:52 by kkroon        ########   odam.nl         */
+/*   Updated: 2023/08/06 15:44:13 by kkroon        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,12 @@ long long	yep_atoi(char *s)
 
 	num = 0;
 	i = 0;
-	while(s[i])
+	while (s[i])
 	{
 		num = num * 10;
 		num = num + (s[i] - 48);
-		if (num > ULONG_MAX)
-			return -1;
+		if (num > INT_MAX)
+			return (-1);
 		i++;
 	}
 	return (num);

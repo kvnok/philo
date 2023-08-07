@@ -6,7 +6,7 @@
 /*   By: kkroon <kkroon@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/06/25 16:50:33 by kkroon        #+#    #+#                 */
-/*   Updated: 2023/08/05 15:59:22 by kkroon        ########   odam.nl         */
+/*   Updated: 2023/08/07 14:15:18 by kkroon        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,16 +32,16 @@ allowed functions :
 */
 
 #ifndef PHILO_H
-#define PHILO_H
+# define PHILO_H
 
-#include <stdio.h>
-#include <stdlib.h>
-#include <unistd.h>
-#include <string.h>
-#include <sys/time.h>
-#include <pthread.h>
-#include <limits.h>
-#include <stdbool.h>
+# include <stdio.h>
+# include <stdlib.h>
+# include <unistd.h>
+# include <string.h>
+# include <sys/time.h>
+# include <pthread.h>
+# include <limits.h>
+# include <stdbool.h>
 
 typedef struct s_philo
 {
@@ -90,6 +90,11 @@ typedef struct s_data
 	struct timeval	start;
 }	t_data;
 
+//main.c
+int			check_argv(char **argv);
+int			fill_data(int argc, char **argv, t_data *d);
+int			cleanup(t_data *d);
+
 //yep_atoi.c
 int			ft_isdigit(int c);
 long long	yep_atoi(char *s);
@@ -99,27 +104,25 @@ long long	cur_time(t_philo p);
 void		proper_sleep(t_philo p, int time_to_sleep);
 
 //thread_stuff.c
-int		fill_philo(t_data *d);
-void	post_mortem(t_data d);
-int		threading(t_data d);
+int			fill_philo(t_data *d);
+int			post_mortem(t_data d, int flag);
+int			threading(t_data d);
 
 //routine.c
-void	first_run_prio(int *flag, t_philo p);
-void	*routine(void *arg);
+void		first_run_prio(int *flag, t_philo p);
+void		*routine(void *arg);
 
 //eating.c
-bool	grab_left(t_philo p, long long time);
-bool	grab_right(t_philo p, long long time);
-void	drop_forks(t_philo p, bool left, bool right);
-void	eating(t_philo *p, long long *time);
+bool		grab_left(t_philo p, long long time);
+bool		grab_right(t_philo p, long long time);
+void		drop_forks(t_philo p, bool left, bool right);
+void		update_eat_stats(t_philo *p);
+void		eating(t_philo *p, long long *time);
 
 //printing.c
-void	debug_print(t_philo p, long long time);
-void	print_with_time(t_philo p, char *message);
+void		print_with_time(t_philo p, char *message);
 
 //utils.c
-bool	check_status(t_philo p);
-bool	check_if_ded(t_philo p, long long time);
-
-
+bool		check_status(t_philo p);
+bool		check_if_ded(t_philo p, long long time);
 #endif

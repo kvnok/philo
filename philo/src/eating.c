@@ -6,16 +6,17 @@
 /*   By: kkroon <kkroon@student.codam.nl>             +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2023/08/04 20:49:05 by kkroon        #+#    #+#                 */
-/*   Updated: 2023/08/05 16:03:22 by kkroon        ########   odam.nl         */
+/*   Updated: 2023/08/05 17:01:57 by kkroon        ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-bool grab_left(t_philo p, long long time)
+bool	grab_left(t_philo p, long long time)
 {
-	bool flag;
-	while(check_if_ded(p, time) == false)
+	bool	flag;
+
+	while (check_if_ded(p, time) == false)
 	{
 		pthread_mutex_lock(p.fork_flags_lock);
 		flag = *p.left_flag;
@@ -25,17 +26,18 @@ bool grab_left(t_philo p, long long time)
 			print_with_time(p, "has taken a fork");
 			*p.left_flag = false;
 			pthread_mutex_unlock(p.fork_flags_lock);
-			return true;
+			return (true);
 		}
 		pthread_mutex_unlock(p.fork_flags_lock);
 	}
-	return false;
+	return (false);
 }
 
-bool grab_right(t_philo p, long long time)
+bool	grab_right(t_philo p, long long time)
 {
-	bool flag;
-	while(check_if_ded(p, time) == false)
+	bool	flag;
+
+	while (check_if_ded(p, time) == false)
 	{
 		pthread_mutex_lock(p.fork_flags_lock);
 		flag = *p.right_flag;
@@ -45,14 +47,14 @@ bool grab_right(t_philo p, long long time)
 			print_with_time(p, "has taken a fork");
 			*p.right_flag = false;
 			pthread_mutex_unlock(p.fork_flags_lock);
-			return true;
+			return (true);
 		}
 		pthread_mutex_unlock(p.fork_flags_lock);
 	}
-	return false;
+	return (false);
 }
 
-void drop_forks(t_philo p, bool left, bool right)
+void	drop_forks(t_philo p, bool left, bool right)
 {
 	pthread_mutex_lock(p.fork_flags_lock);
 	*p.left_flag = true;
@@ -69,7 +71,7 @@ void drop_forks(t_philo p, bool left, bool right)
 //set done_eating to true when nr_to_eat is reached
 //also increment the amount_done_eating from data
 //if every philo is done eating, set status to false
-void update_eat_stats(t_philo *p)
+void	update_eat_stats(t_philo *p)
 {
 	if (p->limit_eating == true)
 	{
@@ -95,10 +97,11 @@ void update_eat_stats(t_philo *p)
 	}
 }
 
-void eating(t_philo *p, long long *time)
+void	eating(t_philo *p, long long *time)
 {
-	bool left;
-	bool right;
+	bool	left;
+	bool	right;
+
 	left = grab_left(*p, *time);
 	right = grab_right(*p, *time);
 	print_with_time(*p, "is eating");
